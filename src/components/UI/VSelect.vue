@@ -1,6 +1,6 @@
 <template>
   <div class="dropdown">
-    <v-button @click="toggleShow" :class="classes">{{ title }}</v-button>
+    <v-button v-click-outside="hideSelect" @click="toggleShow" :class="classes">{{ title }}</v-button>
     <transition name="fade">
       <div v-if="show" class="dropdown__list">
         <slot></slot>
@@ -19,7 +19,7 @@
 
 <script>
 import VButton from "@/components/UI/VButton";
-
+import ClickOutside from 'vue-click-outside'
 export default {
   name: "VSelect",
   components: {VButton},
@@ -56,6 +56,9 @@ export default {
       this.show = false;
     },
   },
+  directives: {
+    ClickOutside
+  }
 }
 </script>
 
