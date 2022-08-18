@@ -56,6 +56,10 @@ export default {
       this.show = false;
     },
   },
+  mounted () {
+    // prevent click outside event with popupItem.
+    this.popupItem = this.$el
+  },
   directives: {
     ClickOutside
   }

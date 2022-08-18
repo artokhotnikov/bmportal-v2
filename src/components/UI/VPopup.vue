@@ -297,7 +297,7 @@ export default {
 
     &__body {
       max-width: 1160px;
-      padding: 30px 20px 40px 40px;
+      padding: 30px 20px 70px 40px;
     }
 
     &__left {
