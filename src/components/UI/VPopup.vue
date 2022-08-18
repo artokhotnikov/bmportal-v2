@@ -10,7 +10,9 @@
             <div @click="activeLeftTab = 1" class="tab" :class="{active: activeLeftTab == 1}">Фото</div>
             <div v-if="item.video" @click="activeLeftTab = 2" class="tab" :class="{active: activeLeftTab == 2}">Видео
             </div>
-            <div v-if="item.obj3d" @click="activeLeftTab = 3" :class="{active: activeLeftTab == 3}" class="tab">3D-модель</div>
+            <div v-if="item.obj3d.length" @click="activeLeftTab = 3" :class="{active: activeLeftTab == 3}" class="tab">
+              3D-модель
+            </div>
           </div>
           <div class="tabs-content">
             <transition mode="out-in" name="fade">
@@ -23,7 +25,7 @@
                   controls></video>
               </div>
               <div class="obj3d" key="3" v-else-if="activeLeftTab == 3">
-                <v-object-views></v-object-views>
+                <v-object-views :src="item.obj3d[0]"></v-object-views>
               </div>
             </transition>
           </div>
@@ -47,6 +49,9 @@
       <div v-else class="popup__content">
         <div class="tabs">
           <div @click="mobileTab = 1" class="tab" :class="{active: mobileTab == 1}">Фото</div>
+          <div v-if="item.obj3d.length" @click="mobileTab = 5" class="tab" :class="{active: mobileTab == 5}">
+            3D-модель
+          </div>
           <div v-if="item.video" @click="mobileTab = 2" class="tab" :class="{active: mobileTab == 2}">Видео
           </div>
           <div v-if="description" @click="mobileTab = 3" class="tab" :class="{active: mobileTab == 3}">Описание</div>
@@ -67,7 +72,9 @@
             <div v-else-if="mobileTab == 3" key="3" v-html="description" class="popup__description">
             </div>
             <div v-else-if="mobileTab == 4" key="4" class="popup__device" v-html="createDiv(item.specification)"></div>
-
+            <div v-else-if="mobileTab == 5" key="4" class="obj3d" >
+              <v-object-views :src="item.obj3d[0]"></v-object-views>
+            </div>
           </transition>
         </div>
       </div>
@@ -119,6 +126,9 @@ export default {
   beforeMount() {
     this.isDescription()
     this.width = window.innerWidth;
+  },
+  mounted() {
+    console.log(this.item)
   }
 }
 </script>
@@ -190,6 +200,8 @@ export default {
     flex: 0 1 38%;
     padding-right: 30px;
     border-right: 1px solid #D6D8DF;
+    display: flex;
+    flex-direction: column;
   }
 
   &__right {
@@ -234,6 +246,10 @@ export default {
   justify-content: center;
   gap: 20px;
   margin-bottom: 24px;
+
+  &-content {
+    flex: 1 1 auto;
+  }
 }
 
 .tab {
@@ -264,6 +280,10 @@ export default {
     height: 100%;
     object-fit: cover;
   }
+}
+
+.obj3d {
+  height: 100%;
 }
 
 @media (max-width: 1560px) {
@@ -331,6 +351,12 @@ export default {
   .popup {
     &__title {
       font-size: 24px;
+      margin-bottom: 24px;
+    }
+    &__body {
+      max-height: 600px;
+      overflow: auto;
+      height: 600px;
     }
   }
 }
@@ -341,7 +367,7 @@ export default {
 
     &__body {
       border-radius: 20px;
-      padding: 52px 20px 70px;
+      padding: 52px 20px 30px;
     }
 
     &__close {
@@ -360,10 +386,11 @@ export default {
     }
   }
   .download {
-    left: 20px;
+    position: static;
+    margin-top: 10px;
+    padding: 8px 40px;
     background-size: 32px;
     height: 32px;
-    padding-left: 40px;
   }
 }
 </style>
