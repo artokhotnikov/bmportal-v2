@@ -10,7 +10,7 @@
             <div @click="activeLeftTab = 1" class="tab" :class="{active: activeLeftTab == 1}">Фото</div>
             <div v-if="item.video" @click="activeLeftTab = 2" class="tab" :class="{active: activeLeftTab == 2}">Видео
             </div>
-            <div v-if="item.obj3d.length" @click="activeLeftTab = 3" :class="{active: activeLeftTab == 3}" class="tab">
+            <div v-if="item.obj3d != null &&  item.obj3d.length" @click="activeLeftTab = 3" :class="{active: activeLeftTab == 3}" class="tab">
               3D-модель
             </div>
           </div>
@@ -49,7 +49,7 @@
       <div v-else class="popup__content">
         <div class="tabs">
           <div @click="mobileTab = 1" class="tab" :class="{active: mobileTab == 1}">Фото</div>
-          <div v-if="item.obj3d.length" @click="mobileTab = 5" class="tab" :class="{active: mobileTab == 5}">
+          <div v-if="item.obj3d != null && item.obj3d.length" @click="mobileTab = 5" class="tab" :class="{active: mobileTab == 5}">
             3D-модель
           </div>
           <div v-if="item.video" @click="mobileTab = 2" class="tab" :class="{active: mobileTab == 2}">Видео

@@ -2,11 +2,15 @@
   <div class="category">
     <v-container v-if="width > 1200">
       <div class="category__name">
-        <div @click="fetchSubcategory(item.id)" class="category__subcategory" :class="{active: show}"></div>
         <div class="category__img">
           <img :src="'https://data.dealer.useful.su/uploads/images/thumb/'+item.images[0]" alt="">
         </div>
-        <span>{{ item.name }}</span>
+        <span>
+          {{ item.name }}
+          <div @click="fetchSubcategory(item.id)" class="category__subcategory">
+          {{ show ? 'Скрыть' : 'Показать' }} комплектации
+        </div>
+        </span>
       </div>
 
       <div class="category__description" v-html="item.description"></div>
@@ -24,13 +28,15 @@
     <v-container v-else>
       <div class="card">
         <div class="category__name">
-          <div @click="fetchSubcategory(item.id)" class="category__subcategory" :class="{active: show}"></div>
           <div class="category__img">
             <img :src="'https://data.dealer.useful.su/uploads/images/thumb/'+item.images[0]" alt="">
           </div>
           <div class="category__header">
             <span>{{ item.name }}</span>
             <p @click="showMore = !showMore">{{ showMore ? 'Скрыть' : 'Подробнее' }}</p>
+            <div @click="fetchSubcategory(item.id)" class="category__subcategory">
+              {{ show ? 'Скрыть' : 'Показать' }} комплектации
+            </div>
           </div>
         </div>
       </div>
@@ -163,19 +169,12 @@ export default {
   }
 
   &__subcategory {
-    width: 20px;
-    height: 20px;
-    background: url('../assets/img/chevron.svg') center / auto no-repeat;
-    position: relative;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%) rotate(-90deg);
+    text-decoration-line: underline;
+    color: #DFB918;
+    font-weight: 400;
+    font-size: 16px;
+    margin-top: 8px;
     cursor: pointer;
-    transition: all 0.3s;
-
-    &.active {
-      transform: translateY(-50%) rotate(0deg);
-    }
   }
 
   &__img {

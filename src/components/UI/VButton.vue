@@ -39,7 +39,7 @@ export default {
     color: $white;
 
     &:hover {
-      background-color: #F0887C;
+      background-color: #EA3C41;
     }
   }
 

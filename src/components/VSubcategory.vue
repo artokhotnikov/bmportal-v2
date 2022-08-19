@@ -9,7 +9,7 @@
       </div>
       <div class="subcategory__description">
         <p v-if v-html="item.specification"></p>
-        <button @click="showPopup = true">Показать все</button>
+        <button @click="showPopup = true">Показать подробности</button>
       </div>
       <div class="subcategory__prices">
         <div class="subcategory__price"><span>РРЦ</span>
@@ -159,7 +159,6 @@ export default {
       bottom: 0;
       left: 0;
       color: $info;
-      text-transform: uppercase;
       text-decoration: underline;
       transition: color 0.3s;
       z-index: 2;

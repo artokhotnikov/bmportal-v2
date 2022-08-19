@@ -4,10 +4,6 @@
       <div class="logo">
         <img src="../assets/img/logo.png" alt="">
       </div>
-      <form class="form" @submit.prevent="searchQuery">
-        <v-input v-model="search" label="Поиск по сайту" id="search"/>
-        <button></button>
-      </form>
       <div class="header__filters">
         <v-select
           @selected="selectedCategory"
@@ -25,8 +21,15 @@
           title="Подкатегории"
         />
       </div>
+      <form class="form" @submit.prevent="searchQuery">
+        <v-input v-model="search" label="Поиск по сайту" id="search"/>
+        <button></button>
+      </form>
       <v-user :user="user"/>
-      <a @click.prevent="downloadFiles" href="#" class="download"></a>
+      <a @click.prevent="downloadFiles" href="#" class="download"><p>Скачать в формате Excel</p></a>
+      <a @click.prevent="downloadFiles" href="#" class="zip"><p>Скачать дилерские материалы
+        <span>Обновлено 11.11.2020</span></p>
+      </a>
     </v-container>
     <v-loader v-if="isLoading"/>
   </header>
@@ -119,8 +122,8 @@ export default {
 }
 
 .logo {
-  width: 243px;
-  flex: 0 0 243px;
+  width: 180px;
+  flex: 0 0 180px;
   margin-right: 50px;
 
   img {
@@ -130,9 +133,9 @@ export default {
 }
 
 .form {
-  flex: 0 0 380px;
+  flex: 1 1 auto;
   position: relative;
-  margin-right: 180px;
+  margin-left: 36px;
 
   button {
     position: absolute;
@@ -152,7 +155,7 @@ export default {
 
 
 .user {
-  margin-left: auto;
+  margin-left: 36px;
 }
 
 
@@ -160,10 +163,38 @@ export default {
   position: absolute;
   bottom: -88px;
   right: 0;
-  width: 48px;
   height: 48px;
-  display: block;
-  background: url('../assets/img/xls.jpg') center/cover no-repeat;
+  padding-left: 56px;
+  display: flex;
+  align-items: center;
+  background: url('../assets/img/xls.jpg') left/48px no-repeat;
+  color: #4C4C4C;
+  font-size: 16px;
+  text-decoration: underline;
+}
+
+.zip {
+  position: absolute;
+  bottom: -88px;
+  right: 250px;
+  height: 48px;
+  padding-left: 56px;
+  display: flex;
+  align-items: center;
+  background: url('../assets/img/zip.png') left/48px no-repeat;
+  color: #4C4C4C;
+  font-size: 16px;
+  text-decoration: underline;
+  flex-wrap: wrap;
+  width: 300px;
+
+  span {
+    flex: 0 0 100%;
+    display: block;
+    margin-top: 4px;
+    color: #B2B2B2;
+    font-size: 12px;
+  }
 }
 
 .dropdown__item {
@@ -197,6 +228,25 @@ export default {
     bottom: auto;
     top: 1px;
     right: 80px;
+    width: auto;
+
+    p {
+      display: none;
+    }
+  }
+  .zip {
+    bottom: auto;
+    top: 1px;
+    right: 150px;
+    width: auto;
+
+    p {
+      display: none;
+    }
+
+  }
+  .user {
+    margin-left: auto;
   }
 }
 
@@ -224,14 +274,24 @@ export default {
     padding: 12px 0 0;
   }
   .logo {
-    width: 180px;
-    flex: 0 0 180px;
+    width: 150px;
+    flex: 0 0 150px;
   }
   .download {
-    top: 3px;
+    top: 0;
     right: 60px;
     width: 32px;
     height: 32px;
+    background-size: 32px;
+    padding-left: 32px;
   }
+  .zip {
+    height: 32px;
+    top: 0;
+    right: 105px;
+    background-size: 32px;
+    padding-left: 32px;
+  }
+
 }
 </style>
