@@ -107,7 +107,6 @@ export default {
           })
           this.list = response.data;
           this.show = true;
-          console.log(response)
         } catch (e) {
           console.log(e)
         } finally {

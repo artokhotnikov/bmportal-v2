@@ -1,9 +1,37 @@
 <template>
   <div class="form-control" ref="label" :class="{error: isError, active: isError}">
-    <label :for="id">{{ label }}</label>
-    <input v-if="password" :value="value" @blur="blur" @focus="focus" @input.prevent="input" :id="id" :name="id" :type="type">
-    <input v-else @blur="blur" :value="value" @focus="focus" @input="input" :id="id" :name="id" type="text">
-    <div class="eye" :class="{'active': type=='text'}" @click="showPassword" v-if="password"></div>
+    <label
+      :for="id"
+    >
+      {{ label }}
+    </label>
+    <input
+      v-if="password"
+      :value="value"
+      @blur="blur"
+      @focus="focus"
+      @input.prevent="input"
+      :id="id"
+      :name="id"
+      :type="type"
+    >
+    <input
+      v-else
+      @blur="blur"
+      :value="value"
+      @focus="focus"
+      @input="input"
+      :id="id"
+      :name="id"
+      type="text"
+    >
+    <div
+      class="eye"
+      :class="{'active': type=='text'}"
+      @click="showPassword"
+      v-if="password"
+    >
+    </div>
   </div>
 </template>
 
@@ -28,9 +56,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    modelValue: {
-      type: [String, Number]
-    },
     password: {
       type: Boolean,
       default: false
@@ -40,14 +65,14 @@ export default {
     },
   },
   methods: {
-    input({ target }) {
+    input({target}) {
       this.$emit("input", target.value);
     },
     focus() {
       this.$refs.label.classList.add('active')
     },
     blur() {
-      if (this.modelValue == '') {
+      if (this.value == '') {
         this.$refs.label.classList.remove('active')
       }
     },
@@ -118,8 +143,9 @@ export default {
     background-image: url('../../assets/img/eye-close.svg');
   }
 }
+
 .form-control {
-  label{
+  label {
     font-size: 16px;
   }
 }

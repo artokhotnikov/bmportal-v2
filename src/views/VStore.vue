@@ -1,51 +1,53 @@
 <template>
   <div>
-  <v-header
-    :user="user"
-    :categoryList="categoryList"
-    @selectedCategory="fetchSubcategory"
-    @selectedSubCategory="fetchModifications"
-    :selectedCat="selectedCat"
-    @searchQuery="searchInList"
-    @showAllCategory="fetchAll"
-    :list-ids="listIDs"
-  />
-  <v-list-modifications
-    :list="newList"
-    :discount="discount"
-    v-if="isModifications"
-  />
-  <v-list
-    v-else-if="!isModifications"
-    :list="newList"
-    :discount="discount"
-  />
-  <div class="empty" v-if="newList.length <=0"> - Совпадений не найдено -</div>
-  <div v-if="!newList.length <=0" class="footer">
-    <v-container>
-      <div class="show-count">
-        <span>Показывать по</span>
-        <select @change="setCurrentPage(1)" v-model="perPage" class="select" name="count" id="count">
-          <option value="10">10</option>
-          <option value="20">20</option>
-          <option value="30">30</option>
-        </select>
-      </div>
-      <v-pagination
-        @paginationClick="setCurrentPage"
-        :page-count="pageCount"
-        :currentPage="currentPage"
-      />
-      <div class="counter">
-        Показаны <span>{{
-          paginationOffset + 1
-        }}-{{ paginationOffset + 10 > list.length ? list.length : paginationOffset + 10 }}</span> из
-        <span>{{ list.length }}</span>
-        записей
-      </div>
-    </v-container>
-  </div>
-  <v-loader v-if="isLoading"/>
+    <v-header
+      :user="user"
+      :categoryList="categoryList"
+      @selectedCategory="fetchSubcategory"
+      @selectedSubCategory="fetchModifications"
+      :selectedCat="selectedCat"
+      @searchQuery="searchInList"
+      @showAllCategory="fetchAll"
+      :list-ids="listIDs"
+      :token="token"
+    />
+    <v-list-modifications
+      :list="newList"
+      :discount="discount"
+      v-if="isModifications"
+    />
+    <v-list
+      v-else-if="!isModifications"
+      :list="newList"
+      :discount="discount"
+    />
+    <div class="empty" v-if="newList.length <=0"> - Совпадений не найдено -</div>
+    <div v-if="!newList.length <=0" class="footer">
+      <v-container>
+        <div class="show-count">
+          <span>Показывать по</span>
+          <select @change="setCurrentPage(1)" v-model="perPage" class="select" name="count" id="count">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+          </select>
+        </div>
+        <v-pagination
+          @paginationClick="setCurrentPage"
+          :page-count="pageCount"
+          :currentPage="currentPage"
+        />
+        <div class="counter">
+          Показаны <span>
+          {{
+            paginationOffset + 1
+          }}-{{ paginationOffset + 10 > list.length ? list.length : paginationOffset + 10 }}</span> из
+          <span>{{ list.length }}</span>
+          записей
+        </div>
+      </v-container>
+    </div>
+    <v-loader v-if="isLoading"/>
   </div>
 </template>
 
@@ -100,7 +102,7 @@ export default {
         if (e.response.data.message == "Expired JWT Token" || e.response.data.message == "Invalid JWT Token") {
           console.log('Токен стух');
           this.loginUser({token: ''});
-          this.$router.push({name: 'main'})
+          await this.$router.push({name: 'main'})
         }
       } finally {
         this.isLoading = false;
@@ -125,7 +127,7 @@ export default {
         if (e.response.data.message == "Expired JWT Token" || e.response.data.message == "Invalid JWT Token") {
           console.log('Токен стух');
           this.loginUser({token: ''});
-          this.$router.push({name: 'main'})
+          await this.$router.push({name: 'main'})
         }
       } finally {
         this.isLoading = false;
@@ -237,16 +239,15 @@ export default {
     this.fetchCategory();
   },
   mounted() {
-    console.log(this.newList)
   },
   watch: {
-    newList() {
+    list() {
       if (this.isModifications) {
         this.listIDs.name = 'modifications';
       } else {
         this.listIDs.name = 'subcategory';
       }
-      this.listIDs.ids = this.newList.map(item => item.id)
+      this.listIDs.ids = this.list.map(item => item.id)
     }
   }
 

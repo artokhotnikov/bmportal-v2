@@ -22,13 +22,18 @@
         />
       </div>
       <form class="form" @submit.prevent="searchQuery">
-        <v-input v-model="search" label="Поиск по сайту" id="search"/>
+        <v-input v-model.trim="search" label="Поиск по сайту" id="search"/>
         <button></button>
       </form>
       <v-user :user="user"/>
-      <a @click.prevent="downloadFiles" href="#" class="download"><p>Скачать в формате Excel</p></a>
-      <a @click.prevent="downloadFiles" href="#" class="zip"><p>Скачать дилерские материалы
-        <span>Обновлено 11.11.2020</span></p>
+      <a @click.prevent="downloadFiles" href="#" class="download">
+        <p>Скачать в формате Excel</p>
+      </a>
+      <a @click.prevent="downloadDealerFiles" href="#" class="zip">
+        <p>
+          Скачать дилерские материалы
+          <span>Обновлено {{ dealerPriceDate }}</span>
+        </p>
       </a>
     </v-container>
     <v-loader v-if="isLoading"/>
@@ -60,12 +65,14 @@ export default {
     listIds: {
       type: [Array, Object],
       required: true,
-    }
+    },
+    token: {},
   },
   data() {
     return {
       search: '',
       isLoading: false,
+      dealerPriceDate: ''
     }
   },
   methods: {
@@ -86,21 +93,77 @@ export default {
       try {
         const response = await axios({
           method: 'post',
-          baseURL: 'https://www.axios.ru/',
+          baseURL: 'https://data.dealer.useful.su/api/excel_files',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.token}`,
           },
           data: JSON.stringify(this.listIds),
         });
+        const url = 'https://data.dealer.useful.su/uploads/excel/' + response.data.excel;
+        console.log(url)
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'file.pdf'); //or any other extension
+        document.body.appendChild(link);
+        link.click();
+      } catch (e) {
+        console.log(e)
+      } finally {
+        this.isLoading = false;
+      }
+    },
+    downloadDealerFiles() {
+      this.isLoading = true;
+      try {
+        axios({
+          method: 'get',
+          baseURL: `https://data.dealer.useful.su/api/material_dealers`,
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${this.token}`,
+          },
+        })
+          .then((response) => {
+            const url = 'https://data.dealer.useful.su/uploads/files/' + response.data[0].archive;
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'file.pdf'); //or any other extension
+            document.body.appendChild(link);
+            link.click();
+          })
+      } catch (e) {
+        console.log(e)
+      } finally {
+        this.isLoading = false;
+      }
+    },
+    async preDownloadDealerFiles() {
+      this.isLoading = true;
+      try {
+        const response = await axios({
+          method: 'get',
+          baseURL: `https://data.dealer.useful.su/api/material_dealers`,
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${this.token}`,
+          },
+        });
+        const date = new Date(response.data[0].updatedAt);
+        this.dealerPriceDate = date.toLocaleDateString();
+
 
       } catch (e) {
-
+        console.log(e)
       } finally {
         this.isLoading = false;
       }
     }
   },
+  beforeMount() {
+    this.preDownloadDealerFiles()
+  }
 }
 </script>
 

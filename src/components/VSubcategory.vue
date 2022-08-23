@@ -8,15 +8,20 @@
         <span>{{ item.name }}</span>
       </div>
       <div class="subcategory__description">
-        <p v-if v-html="item.specification"></p>
+        <p v-if v-html="createDiv(item.specification)"></p>
         <button @click="showPopup = true">Показать подробности</button>
       </div>
       <div class="subcategory__prices">
         <div class="subcategory__price"><span>РРЦ</span>
           {{ item.price ? 'от ' + Number(item.price).toLocaleString("ru") + ' ₽' : 'Цена по запросу' }}
         </div>
-        <div class="subcategory__price"><span>Цена для дилера </span>{{
-            item.price ? 'от ' + Number(item.price - item.price * (discount / 100)).toLocaleString("ru") + ' ₽' : 'Цена по запросу'
+        <div class="subcategory__price"><span>Цена для дилера </span>
+          {{
+            itemDealerPrice(item.price, item.minPrice, discount)
+          }}
+        </div>
+        <div class="subcategory__price"><span>Цена упаковки </span>{{
+            item.packPrice ? Number(item.packPrice).toLocaleString("ru") + ' ₽' : 'Цена по запросу'
           }}
         </div>
       </div>
@@ -36,8 +41,13 @@
           <div class="subcategory__price"><span>РРЦ</span>
             {{ item.price ? 'от ' + Number(item.price).toLocaleString("ru") + ' ₽' : 'Цена по запросу' }}
           </div>
-          <div class="subcategory__price"><span>Цена для дилера </span>{{
-              item.price ? 'от ' + Number(item.price - item.price * (discount / 100)).toLocaleString("ru") + ' ₽' : 'Цена по запросу'
+          <div class="subcategory__price"><span>Цена для дилера </span>
+            {{
+              itemDealerPrice(item.price, item.minPrice, discount)
+            }}
+          </div>
+          <div class="subcategory__price"><span>Цена упаковки </span>{{
+              item.packPrice ? Number(item.packPrice).toLocaleString("ru") + ' ₽' : 'Цена по запросу'
             }}
           </div>
         </div>
@@ -79,10 +89,27 @@ export default {
     closePopup() {
       this.showPopup = false;
     },
+    itemDealerPrice(price, minPrice, discount) {
+      if (price) {
+        if (minPrice > price - price * (discount / 100)) {
+          return 'от ' + Number(minPrice).toLocaleString("ru") + ' ₽'
+        } else {
+          return 'от ' + Number(price - price * (discount / 100)).toLocaleString("ru") + ' ₽'
+        }
+      } else {
+        return 'Цена по запросу'
+      }
+    },
+    createDiv(item) {
+      return item.join(', ')
+    },
   },
+
   beforeMount() {
     this.width = window.innerWidth;
   },
+  mounted() {
+  }
 }
 </script>
 
@@ -93,11 +120,9 @@ export default {
   .container {
     padding-top: 10px;
     display: grid;
-    grid-template-columns: 4fr 5fr 3fr;
+    grid-template-columns: 4fr 4fr 4fr;
     padding-bottom: 5px;
     border-bottom: 1px solid #D6D8DF;
-    //max-width: 1240px;
-    //margin: 0 0 0 auto;
   }
 
   &__name {

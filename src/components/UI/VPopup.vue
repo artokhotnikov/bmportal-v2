@@ -13,6 +13,12 @@
             <div v-if="item.obj3d != null &&  item.obj3d.length" @click="activeLeftTab = 3" :class="{active: activeLeftTab == 3}" class="tab">
               3D-модель
             </div>
+            <div v-if="item.subCategory.drawing" @click="showPdf(item)" class="tab">
+              Чертежи
+            </div>
+            <a :href="'https://data.dealer.useful.su/uploads/files/' +item.subCategory.techSpec" :download="item.subCategory.techSpecOrigName" v-if="item.subCategory.techSpec" class="tab">
+              Тех.задание
+            </a>
           </div>
           <div class="tabs-content">
             <transition mode="out-in" name="fade">
@@ -32,17 +38,19 @@
         </div>
         <div class="popup__right">
           <div class="tabs">
-            <div v-if="description" @click="activeRightTab = 1" class="tab" :class="{active: activeRightTab == 1}">
-              Описание
+
+            <div v-if="item.specification" @click="activeRightTab = 1" class="tab"
+                 :class="{active: activeRightTab == 1}">Оборудование
             </div>
-            <div v-if="item.specification" @click="activeRightTab = 2" class="tab"
-                 :class="{active: activeRightTab == 2}">Оборудование
+            <div v-if="description" @click="activeRightTab = 2" class="tab" :class="{active: activeRightTab == 2}">
+              Описание
             </div>
           </div>
           <transition mode="out-in" name="fade">
-            <div v-if="activeRightTab == 1" v-html="description" class="popup__description">
+            <div v-if="activeRightTab == 1" class="popup__device" v-html="createDiv(item.specification)"></div>
+            <div v-else-if="activeRightTab == 2" v-html="description" class="popup__description">
             </div>
-            <div v-else-if="activeRightTab == 2" class="popup__device" v-html="createDiv(item.specification)"></div>
+
           </transition>
         </div>
       </div>
@@ -58,6 +66,12 @@
           <div v-if="item.specification" @click="mobileTab = 4" class="tab" :class="{active: mobileTab == 4}">
             Оборудование
           </div>
+          <div v-if="item.subCategory.drawing" @click="showPdf(item)" class="tab">
+            Чертежи
+          </div>
+          <a :href="'https://data.dealer.useful.su/uploads/files/' +item.subCategory.techSpec" :download="item.subCategory.techSpecOrigName" v-if="item.subCategory.techSpec" class="tab">
+            Тех.задание
+          </a>
         </div>
         <div class="tabs-content">
           <transition mode="out-in" name="fade">
@@ -78,7 +92,10 @@
           </transition>
         </div>
       </div>
-      <a href="#" download="" class="download">Скачать</a>
+    </div>
+    <div class="popup__body pdf-body" v-if="isPdfShow">
+      <div class="popup__close" @click="isPdfShow = false"></div>
+      <iframe :src="'https://data.dealer.useful.su/uploads/files/'+item.subCategory.drawing" width="100%" height="100%"></iframe>
     </div>
   </div>
 </template>
@@ -105,6 +122,7 @@ export default {
       activeRightTab: 1,
       width: 0,
       mobileTab: 1,
+      isPdfShow: false,
     }
   },
   methods: {
@@ -120,7 +138,10 @@ export default {
       } else {
         this.activeRightTab = 2
       }
-    }
+    },
+    showPdf(){
+      this.isPdfShow = true;
+    },
   },
   computed: {},
   beforeMount() {
@@ -128,7 +149,6 @@ export default {
     this.width = window.innerWidth;
   },
   mounted() {
-    console.log(this.item)
   }
 }
 </script>
@@ -180,6 +200,14 @@ export default {
     padding: 55px 110px 90px 130px;
     display: flex;
     flex-direction: column;
+    &.pdf-body{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      height: 80vh;
+      padding: 60px 30px 20px;
+    }
   }
 
   &__title {
@@ -257,6 +285,7 @@ export default {
   transition: all 0.3s;
   border-bottom: 1px solid transparent;
   cursor: pointer;
+  color: $primary;
 
   &:hover {
     color: #F0887C;
@@ -298,6 +327,14 @@ export default {
     &__body {
       max-width: 1160px;
       padding: 30px 20px 70px 40px;
+      &.pdf-body{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 100vh;
+        padding: 60px 30px 20px;
+      }
     }
 
     &__left {
@@ -330,6 +367,9 @@ export default {
 
     &__body {
       padding: 56px 32px 70px;
+      &.pdf-body{
+      border-radius: 0;
+      }
     }
 
     &__description,

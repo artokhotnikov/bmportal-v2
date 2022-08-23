@@ -13,9 +13,21 @@
           администратору
         </div>
       </transition>
-      <v-input :is-error="loginError" ref="email" v-model="user.email" label="Ваш логин" id="name"/>
-      <v-input :is-error="loginError" ref="password" v-model="user.password" :password="true" label="Ваш пароль"
-               id="password"/>
+      <v-input
+        :is-error="loginError"
+        ref="email"
+        v-model="user.email"
+        label="Ваш логин"
+        id="name"
+      />
+      <v-input
+        :is-error="loginError"
+        ref="password"
+        v-model="user.password"
+        :password="true"
+        label="Ваш пароль"
+        id="password"
+      />
       <div class="policy">
         <input v-model="user.policy" type="checkbox" name="policy" id="policy">
         <label for="policy">Нажимая на кнопку, вы даете согласие на обработку
@@ -86,7 +98,6 @@ export default {
   },
   computed: {
     isEmpty() {
-      console.log(this.user.password)
       return !(this.user.password && this.user.email && this.user.policy)
     }
   },
