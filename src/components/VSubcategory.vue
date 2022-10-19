@@ -34,7 +34,7 @@
           </div>
           <div class="category__header">
             <span>{{ item.name }}</span>
-            <p @click="showPopup = !showMore">{{ showMore ? 'Скрыть' : 'Подробнее' }}</p>
+            <p @click="showPopup = !showPopup">{{ showPopup ? 'Скрыть' : 'Подробнее' }}</p>
           </div>
         </div>
         <div class="subcategory__prices">
