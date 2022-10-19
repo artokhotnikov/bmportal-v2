@@ -7,31 +7,30 @@
       <div v-if="width > 1200" class="popup__content">
         <div class="popup__left">
           <div class="tabs">
-            <div @click="activeLeftTab = 1" class="tab" :class="{active: activeLeftTab == 1}">Фото</div>
-            <div v-if="item.video" @click="activeLeftTab = 2" class="tab" :class="{active: activeLeftTab == 2}">Видео
-            </div>
-            <div v-if="item.obj3d != null &&  item.obj3d.length" @click="activeLeftTab = 3" :class="{active: activeLeftTab == 3}" class="tab">
-              3D-модель
-            </div>
+            <div @click="activeLeftTab = 1" class="tab" :class="{active: activeLeftTab == 1}">Картинки</div>
             <div v-if="item.subCategory.drawing" @click="showPdf(item)" class="tab">
               Чертежи
             </div>
-            <a :href="'https://data.dealer.useful.su/uploads/files/' +item.subCategory.techSpec" :download="item.subCategory.techSpecOrigName" v-if="item.subCategory.techSpec" class="tab">
-              Тех.задание
+            <a :href="'https://data.dealer.useful.su/uploads/files/' +item.subCategory.techSpec"
+               :download="item.subCategory.techSpecOrigName" v-if="item.subCategory.techSpec" class="tab">
+              ТЗ
             </a>
+            <div @click="activeLeftTab = 2" class="tab" :class="{active: activeLeftTab == 2}">Фото</div>
+            <div v-if="item.obj3d != null &&  item.obj3d.length" @click="activeLeftTab = 3"
+                 :class="{active: activeLeftTab == 3}" class="tab tab3d">
+              360°
+            </div>
           </div>
           <div class="tabs-content">
             <transition mode="out-in" name="fade">
-              <div class="slider" key="1" v-if="activeLeftTab == 1">
+              <div class="slider" key="1" v-if="activeLeftTab == 2">
+                <v-swiper :list="item.galleryImages"></v-swiper>
+              </div>
+              <div key="2" v-else-if="activeLeftTab == 1">
                 <v-swiper :list="item.images"></v-swiper>
               </div>
-              <div class="video" key="2" v-else-if="activeLeftTab == 2">
-                <video
-                  src="https://ia600907.us.archive.org/2/items/bliptv-20131013-191530-AshleysHugtime-AshleyIsASexMachine343./bliptv-20131013-191530-AshleysHugtime-AshleyIsASexMachine343.mp4"
-                  controls></video>
-              </div>
               <div class="obj3d" key="3" v-else-if="activeLeftTab == 3">
-                <v-object-views :src="item.obj3d[0]"></v-object-views>
+                <v-object-views :mtl="item.obj3d[1]" :src="item.obj3d[0]"></v-object-views>
               </div>
             </transition>
           </div>
@@ -56,11 +55,11 @@
       </div>
       <div v-else class="popup__content">
         <div class="tabs">
-          <div @click="mobileTab = 1" class="tab" :class="{active: mobileTab == 1}">Фото</div>
-          <div v-if="item.obj3d != null && item.obj3d.length" @click="mobileTab = 5" class="tab" :class="{active: mobileTab == 5}">
+          <div @click="mobileTab = 1" class="tab" :class="{active: mobileTab == 1}">Картинки</div>
+          <div @click="mobileTab = 2" class="tab" :class="{active: mobileTab == 2}">Фото</div>
+          <div v-if="item.obj3d != null && item.obj3d.length" @click="mobileTab = 5" class="tab"
+               :class="{active: mobileTab == 5}">
             3D-модель
-          </div>
-          <div v-if="item.video" @click="mobileTab = 2" class="tab" :class="{active: mobileTab == 2}">Видео
           </div>
           <div v-if="description" @click="mobileTab = 3" class="tab" :class="{active: mobileTab == 3}">Описание</div>
           <div v-if="item.specification" @click="mobileTab = 4" class="tab" :class="{active: mobileTab == 4}">
@@ -69,8 +68,9 @@
           <div v-if="item.subCategory.drawing" @click="showPdf(item)" class="tab">
             Чертежи
           </div>
-          <a :href="'https://data.dealer.useful.su/uploads/files/' +item.subCategory.techSpec" :download="item.subCategory.techSpecOrigName" v-if="item.subCategory.techSpec" class="tab">
-            Тех.задание
+          <a :href="'https://data.dealer.useful.su/uploads/files/' +item.subCategory.techSpec"
+             :download="item.subCategory.techSpecOrigName" v-if="item.subCategory.techSpec" class="tab">
+            ТЗ
           </a>
         </div>
         <div class="tabs-content">
@@ -78,16 +78,14 @@
             <div class="slider" key="1" v-if="mobileTab == 1">
               <v-swiper :list="item.images"></v-swiper>
             </div>
-            <div class="video" key="2" v-else-if="mobileTab == 2">
-              <video
-                src="https://ia600907.us.archive.org/2/items/bliptv-20131013-191530-AshleysHugtime-AshleyIsASexMachine343./bliptv-20131013-191530-AshleysHugtime-AshleyIsASexMachine343.mp4"
-                controls></video>
+            <div class="slider" key="2" v-if="mobileTab == 2">
+              <v-swiper :list="item.galleryImages"></v-swiper>
             </div>
             <div v-else-if="mobileTab == 3" key="3" v-html="description" class="popup__description">
             </div>
             <div v-else-if="mobileTab == 4" key="4" class="popup__device" v-html="createDiv(item.specification)"></div>
-            <div v-else-if="mobileTab == 5" key="4" class="obj3d" >
-              <v-object-views :src="item.obj3d[0]"></v-object-views>
+            <div v-else-if="mobileTab == 5" key="4" class="obj3d">
+              <v-object-views :mtl="item.obj3d[1]" :src="item.obj3d[0]"></v-object-views>
             </div>
           </transition>
         </div>
@@ -95,7 +93,8 @@
     </div>
     <div class="popup__body pdf-body" v-if="isPdfShow">
       <div class="popup__close" @click="isPdfShow = false"></div>
-      <iframe :src="'https://data.dealer.useful.su/uploads/files/'+item.subCategory.drawing" width="100%" height="100%"></iframe>
+      <iframe :src="'https://data.dealer.useful.su/uploads/files/'+item.subCategory.drawing" width="100%"
+              height="100%"></iframe>
     </div>
   </div>
 </template>
@@ -139,7 +138,7 @@ export default {
         this.activeRightTab = 2
       }
     },
-    showPdf(){
+    showPdf() {
       this.isPdfShow = true;
     },
   },
@@ -149,6 +148,7 @@ export default {
     this.width = window.innerWidth;
   },
   mounted() {
+    console.log(this.item)
   }
 }
 </script>
@@ -200,7 +200,8 @@ export default {
     padding: 55px 110px 90px 130px;
     display: flex;
     flex-direction: column;
-    &.pdf-body{
+
+    &.pdf-body {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -230,6 +231,7 @@ export default {
     border-right: 1px solid #D6D8DF;
     display: flex;
     flex-direction: column;
+    position: relative;
   }
 
   &__right {
@@ -297,6 +299,13 @@ export default {
   }
 }
 
+//.tab.tab3d {
+//  position: absolute;
+//  bottom: 12px;
+//  right: -5px;
+//  z-index: 33;
+//}
+
 .video {
   position: relative;
   padding-bottom: 100%;
@@ -327,7 +336,8 @@ export default {
     &__body {
       max-width: 1160px;
       padding: 30px 20px 70px 40px;
-      &.pdf-body{
+
+      &.pdf-body {
         position: absolute;
         top: 50%;
         left: 50%;
@@ -367,8 +377,9 @@ export default {
 
     &__body {
       padding: 56px 32px 70px;
-      &.pdf-body{
-      border-radius: 0;
+
+      &.pdf-body {
+        border-radius: 0;
       }
     }
 
@@ -393,10 +404,11 @@ export default {
       font-size: 24px;
       margin-bottom: 24px;
     }
+
     &__body {
-      max-height: 600px;
+      max-height: 660px;
       overflow: auto;
-      height: 600px;
+      height: 660px;
     }
   }
 }

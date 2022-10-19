@@ -8,7 +8,7 @@
         <span>{{ item.name }}</span>
       </div>
       <div class="subcategory__description">
-        <p v-if v-html="createDiv(item.specification)"></p>
+        <p v-if="item.specification" v-html="createDiv(item.specification)"></p>
         <button @click="showPopup = true">Показать подробности</button>
       </div>
       <div class="subcategory__prices">

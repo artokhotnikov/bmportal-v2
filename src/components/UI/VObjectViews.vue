@@ -1,9 +1,11 @@
 <template>
   <model-obj
     :src="url"
+    :mtl="urlMtl"
     :scale="{x: 0.7, y: 0.7, z: 0.7}"
     :rotation="{ x: 0, y: Math.PI / 5, z: 0 }"
     :lights="lights"
+    backgroundColor="#efeded"
   ></model-obj>
 </template>
 
@@ -13,51 +15,51 @@ import {ModelObj} from 'vue-3d-model';
 export default {
   name: "VObjectViews",
   components: {ModelObj},
-  props: ['src'],
-  methods: {
-  },
+  props: ['src', 'mtl'],
+  methods: {},
   data() {
     return {
       url: 'https://data.dealer.useful.su/uploads/images/' + this.src,
+      urlMtl: 'https://data.dealer.useful.su/uploads/images/' + this.mtl,
       lights: [
         {
           type: 'DirectionalLight',
-          position: { x: 1, y: 1, z: 1 },
+          position: {x: 1, y: 1, z: 1},
           color: 0xffffff,
-          intensity: 0.5,
+          intensity: 1,
         },
         {
           type: 'DirectionalLight',
-          position: { x: -1, y: 1, z: 1 },
+          position: {x: -1, y: 1, z: 1},
           color: 0xffffff,
-          intensity: 0.5,
+          intensity: 1,
         },
         {
           type: 'DirectionalLight',
-          position: { x: 1, y: 1, z: -1 },
+          position: {x: 1, y: 1, z: -1},
           color: 0xffffff,
-          intensity: 0.5,
+          intensity: 1,
         },
         {
           type: 'DirectionalLight',
-          position: { x: -1, y: 1, z: -1 },
+          position: {x: -1, y: 1, z: -1},
           color: 0xffffff,
-          intensity: 0.5,
+          intensity: 1.2,
         },
         {
           type: 'DirectionalLight',
-          position: { x: 0, y: -1, z: 0 },
+          position: {x: 0, y: -1, z: 0},
           color: 0xffffff,
-          intensity: 0.5,
+          intensity: 1.2,
         },
       ]
     }
   },
-
+  mounted() {
+    console.log(this.mtl)
+  }
 }
 </script>
 
-<style >
-canvas {
-}
+<style>
 </style>

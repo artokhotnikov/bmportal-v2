@@ -68,7 +68,7 @@ export default {
 
 <style lang="scss">
 .swiper {
-  width: 440px;
+  width: 500px
 }
 
 .swiper-wrapper {
@@ -77,10 +77,15 @@ export default {
 
 .swiper-slide {
   text-align: center;
+  padding-top: 95%;
 
   img {
-    max-height: 435px;
-    max-width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }
 

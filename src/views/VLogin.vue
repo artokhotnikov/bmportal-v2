@@ -3,7 +3,7 @@
     <div class="logo">
       <img src="../assets/img/logo.png" alt="">
     </div>
-    <h1 class="title">Войдите для продолжения работы с сервисом</h1>
+    <h1 class="title">Добро пожаловать на портал дилера BM GROUP</h1>
     <form class="form" @submit.prevent="login">
       <transition name="fade">
         <div v-if="loginError" class="alert">Неверные логин/пароль</div>
@@ -53,7 +53,7 @@ export default {
   components: {VLoader, VButton, VInput},
   data() {
     return {
-      AUTH_URL: 'https://data.dealer.useful.su/authentication_token',
+      AUTH_URL: 'https://data.dealer.useful.su/api/authentication_token',
       token: '',
       user: {
         email: '',
