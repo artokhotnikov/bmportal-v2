@@ -53,7 +53,7 @@ export default {
   components: {VLoader, VButton, VInput},
   data() {
     return {
-      AUTH_URL: 'https://data.dealer.useful.su/api/authentication_token',
+      AUTH_URL: 'https://dpn.bm-technology.ru/api/authentication_token',
       token: '',
       user: {
         email: '',

@@ -90,7 +90,7 @@ export default {
       try {
         const response = await axios({
           method: 'get',
-          baseURL: 'https://data.dealer.useful.su/api/user_info',
+          baseURL: 'https://dpn.bm-technology.ru/api/user_info',
           headers: {
             'Accept': 'application/json',
             'Authorization': `Bearer ${this.token}`,
@@ -114,7 +114,7 @@ export default {
       try {
         const response = await axios({
           method: 'get',
-          baseURL: 'https://data.dealer.useful.su/api/sub_categories',
+          baseURL: 'https://dpn.bm-technology.ru/api/sub_categories',
           headers: {
             'Accept': 'application/json',
             'Authorization': `Bearer ${this.token}`,
@@ -141,7 +141,7 @@ export default {
       try {
         const response = await axios({
           method: 'get',
-          baseURL: `https://data.dealer.useful.su/api/categories/${item.id}/sub_categories`,
+          baseURL: `https://dpn.bm-technology.ru/api/categories/${item.id}/sub_categories`,
           headers: {
             'Accept': 'application/json',
             'Authorization': `Bearer ${this.token}`,
@@ -163,7 +163,7 @@ export default {
       try {
         const response = await axios({
           method: 'get',
-          baseURL: 'https://data.dealer.useful.su/api/categories',
+          baseURL: 'https://dpn.bm-technology.ru/api/categories',
           headers: {
             'Accept': 'application/json',
             'Authorization': `Bearer ${this.token}`,
@@ -183,7 +183,7 @@ export default {
       try {
         const response = await axios({
           method: 'get',
-          baseURL: `https://data.dealer.useful.su/api/sub_categories/${item.id}/modifications`,
+          baseURL: `https://dpn.bm-technology.ru/api/sub_categories/${item.id}/modifications`,
           headers: {
             'Accept': 'application/json',
             'Authorization': `Bearer ${this.token}`,

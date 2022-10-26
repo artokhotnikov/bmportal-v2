@@ -19,8 +19,8 @@ export default {
   methods: {},
   data() {
     return {
-      url: 'https://data.dealer.useful.su/uploads/images/' + this.src,
-      urlMtl: 'https://data.dealer.useful.su/uploads/images/' + this.mtl,
+      url: 'https://dpn.bm-technology.ru/uploads/images/' + this.src,
+      urlMtl: 'https://dpn.bm-technology.ru/uploads/images/' + this.mtl,
       lights: [
         {
           type: 'DirectionalLight',

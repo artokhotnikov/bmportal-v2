@@ -11,7 +11,7 @@
             <div v-if="item.subCategory.drawing" @click="showPdf(item)" class="tab">
               Чертежи
             </div>
-            <a :href="'https://data.dealer.useful.su/uploads/files/' +item.subCategory.techSpec"
+            <a :href="'https://dpn.bm-technology.ru/uploads/files/' +item.subCategory.techSpec"
                :download="item.subCategory.techSpecOrigName" v-if="item.subCategory.techSpec" class="tab">
               ТЗ
             </a>
@@ -68,7 +68,7 @@
           <div v-if="item.subCategory.drawing" @click="showPdf(item)" class="tab">
             Чертежи
           </div>
-          <a :href="'https://data.dealer.useful.su/uploads/files/' +item.subCategory.techSpec"
+          <a :href="'https://dpn.bm-technology.ru/uploads/files/' +item.subCategory.techSpec"
              :download="item.subCategory.techSpecOrigName" v-if="item.subCategory.techSpec" class="tab">
             ТЗ
           </a>
@@ -93,7 +93,7 @@
     </div>
     <div class="popup__body pdf-body" v-if="isPdfShow">
       <div class="popup__close" @click="isPdfShow = false"></div>
-      <iframe :src="'https://data.dealer.useful.su/uploads/files/'+item.subCategory.drawing" width="100%"
+      <iframe :src="'https://dpn.bm-technology.ru/uploads/files/'+item.subCategory.drawing" width="100%"
               height="100%"></iframe>
     </div>
   </div>

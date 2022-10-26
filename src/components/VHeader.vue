@@ -93,7 +93,7 @@ export default {
       try {
         const response = await axios({
           method: 'post',
-          baseURL: 'https://data.dealer.useful.su/api/excel_files',
+          baseURL: 'https://dpn.bm-technology.ru/api/excel_files',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -101,7 +101,7 @@ export default {
           },
           data: JSON.stringify(this.listIds),
         });
-        const url = 'https://data.dealer.useful.su/uploads/excel/' + response.data.excel;
+        const url = 'https://dpn.bm-technology.ru/uploads/excel/' + response.data.excel;
         console.log(url)
         const link = document.createElement('a');
         link.href = url;
@@ -119,14 +119,14 @@ export default {
       try {
         axios({
           method: 'get',
-          baseURL: `https://data.dealer.useful.su/api/material_dealers`,
+          baseURL: `https://dpn.bm-technology.ru/api/material_dealers`,
           headers: {
             'Accept': 'application/json',
             'Authorization': `Bearer ${this.token}`,
           },
         })
           .then((response) => {
-            const url = 'https://data.dealer.useful.su/uploads/files/' + response.data[0].archive;
+            const url = 'https://dpn.bm-technology.ru/uploads/files/' + response.data[0].archive;
             const link = document.createElement('a');
             link.href = url;
             link.setAttribute('download', 'file.pdf'); //or any other extension
@@ -144,7 +144,7 @@ export default {
       try {
         const response = await axios({
           method: 'get',
-          baseURL: `https://data.dealer.useful.su/api/material_dealers`,
+          baseURL: `https://dpn.bm-technology.ru/api/material_dealers`,
           headers: {
             'Accept': 'application/json',
             'Authorization': `Bearer ${this.token}`,

@@ -3,7 +3,7 @@
     <v-container v-if="width > 1200">
       <div class="category__name">
         <div class="category__img">
-          <img v-if="item.pic" :src="'https://data.dealer.useful.su/uploads/images/pic/'+item.pic" alt="">
+          <img v-if="item.pic" :src="'https://dpn.bm-technology.ru/uploads/images/pic/'+item.pic" alt="">
           <img v-else  src="@/assets/img/notfound.jpeg" alt="">
         </div>
         <span>
@@ -30,7 +30,7 @@
       <div class="card">
         <div class="category__name">
           <div class="category__img">
-            <img v-if="item.pic" :src="'https://data.dealer.useful.su/uploads/images/pic/'+item.pic" alt="">
+            <img v-if="item.pic" :src="'https://dpn.bm-technology.ru/uploads/images/pic/'+item.pic" alt="">
             <img v-else  src="@/assets/img/notfound.jpeg" alt="">
           </div>
           <div class="category__header">
@@ -101,7 +101,7 @@ export default {
         try {
           const response = await axios({
             method: 'get',
-            baseURL: `https://data.dealer.useful.su/api/sub_categories/${id}/modifications`,
+            baseURL: `https://dpn.bm-technology.ru/api/sub_categories/${id}/modifications`,
             headers: {
               'Accept': 'application/json',
               'Authorization': `Bearer ${this.token}`,
