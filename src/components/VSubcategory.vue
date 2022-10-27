@@ -3,7 +3,8 @@
     <v-container v-if="width > 1200">
       <div @click="showPopup = true" class="subcategory__name">
         <div class="subcategory__img">
-          <img :src="'https://dpn.bm-technology.ru/uploads/images/thumb/'+item.images[0]" alt="">
+          <img v-if="item.pic" :src="'https://dpn.bm-technology.ru/uploads/images/pic/'+item.pic" alt="">
+          <img v-else  src="@/assets/img/notfound.jpeg" alt="">
         </div>
         <span>{{ item.name }}</span>
       </div>
