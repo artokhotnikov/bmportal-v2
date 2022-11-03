@@ -3,7 +3,7 @@
     <v-container v-if="width > 1200">
       <div @click="showPopup = true" class="subcategory__name">
         <div class="subcategory__img">
-          <img v-if="item.pic" :src="'https://dpn.bm-technology.ru/uploads/images/pic/'+item.pic" alt="">
+          <img v-if="imgThumb" :src="'https://dpn.bm-technology.ru'+imgThumb" alt="">
           <img v-else  src="@/assets/img/notfound.jpeg" alt="">
         </div>
         <span>{{ item.name }}</span>
@@ -31,7 +31,8 @@
       <div class="card">
         <div @click="showPopup = true" class="subcategory__name">
           <div class="subcategory__img">
-            <img :src="'https://dpn.bm-technology.ru/uploads/images/thumb/'+item.images[0]" alt="">
+            <img v-if="imgThumb" :src="'https://dpn.bm-technology.ru'+imgThumb" alt="">
+            <img v-else  src="@/assets/img/notfound.jpeg" alt="">
           </div>
           <div class="category__header">
             <span>{{ item.name }}</span>
@@ -83,7 +84,8 @@ export default {
     return {
       showPopup: false,
       width: 0,
-      showMore: false
+      showMore: false,
+      imgThumb: null
     }
   },
   methods: {
@@ -104,12 +106,16 @@ export default {
     createDiv(item) {
       return item.join(', ')
     },
+    getThumb() {
+      this.imgThumb = this.item.images[0].imageThumb;
+    }
   },
 
   beforeMount() {
     this.width = window.innerWidth;
   },
   mounted() {
+    this.getThumb()
   }
 }
 </script>

@@ -4,7 +4,7 @@
     <div class="swiper-wrapper">
       <!-- Slides -->
       <div class="swiper-slide" v-for="item in list" :key="item.id">
-        <img :src="'https://dpn.bm-technology.ru/uploads/images/'+item" alt="">
+        <img :src="'https://dpn.bm-technology.ru'+item" alt="">
       </div>
     </div>
     <!-- If we need pagination -->

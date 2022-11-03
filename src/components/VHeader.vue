@@ -29,7 +29,7 @@
       <a @click.prevent="downloadFiles" href="#" class="download">
         <p>Скачать в формате Excel</p>
       </a>
-      <a @click.prevent="downloadDealerFiles" href="#" class="zip">
+      <a v-if="showDealer" @click.prevent="downloadDealerFiles" href="#" class="zip">
         <p>
           Скачать дилерские материалы
           <span>Обновлено {{ dealerPriceDate }}</span>
@@ -72,7 +72,8 @@ export default {
     return {
       search: '',
       isLoading: false,
-      dealerPriceDate: ''
+      dealerPriceDate: '',
+      showDealer: false,
     }
   },
   methods: {
@@ -152,10 +153,11 @@ export default {
         });
         const date = new Date(response.data[0].updatedAt);
         this.dealerPriceDate = date.toLocaleDateString();
-
+        this.showDealer = true;
 
       } catch (e) {
         console.log(e)
+        this.showDealer = false;
       } finally {
         this.isLoading = false;
       }

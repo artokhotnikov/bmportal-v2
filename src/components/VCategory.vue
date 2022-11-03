@@ -3,8 +3,8 @@
     <v-container v-if="width > 1200">
       <div class="category__name">
         <div class="category__img">
-          <img v-if="item.pic" :src="'https://dpn.bm-technology.ru/uploads/images/pic/'+item.pic" alt="">
-          <img v-else  src="@/assets/img/notfound.jpeg" alt="">
+          <img v-if="imgThumb" :src="'https://dpn.bm-technology.ru'+imgThumb" alt="">
+          <img v-else src="@/assets/img/notfound.jpeg" alt="">
         </div>
         <span>
           {{ item.name }}
@@ -30,8 +30,8 @@
       <div class="card">
         <div class="category__name">
           <div class="category__img">
-            <img v-if="item.pic" :src="'https://dpn.bm-technology.ru/uploads/images/pic/'+item.pic" alt="">
-            <img v-else  src="@/assets/img/notfound.jpeg" alt="">
+            <img v-if="imgThumb" :src="'https://dpn.bm-technology.ru'+imgThumb" alt="">
+            <img v-else src="@/assets/img/notfound.jpeg" alt="">
           </div>
           <div class="category__header">
             <span>{{ item.name }}</span>
@@ -117,6 +117,9 @@ export default {
       } else {
         this.show = false
       }
+    },
+    getThumb() {
+      this.imgThumb = this.item.images[0].imageThumb;
     }
   },
   components: {VLoader, VSubcategory, VContainer},
@@ -127,13 +130,17 @@ export default {
       isLoading: false,
       list: [],
       width: 0,
-      showMore: false
+      showMore: false,
+      imgThumb: null,
     }
   },
   beforeMount() {
     this.token = this.$store.getters.token;
     this.width = window.innerWidth;
   },
+  mounted() {
+    this.getThumb()
+  }
 }
 </script>
 

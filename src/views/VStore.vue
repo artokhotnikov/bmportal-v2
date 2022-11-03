@@ -124,7 +124,8 @@ export default {
         this.list = response.data;
         this.setCurrentPage(1)
       } catch (e) {
-        if (e.response.data.message == "Expired JWT Token" || e.response.data.message == "Invalid JWT Token") {
+
+        if (e.response.data.message === "Expired JWT Token" || e.response.data.message === "Invalid JWT Token") {
           console.log('Токен стух');
           this.loginUser({token: ''});
           await this.$router.push({name: 'main'})

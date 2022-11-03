@@ -16,22 +16,22 @@
               ТЗ
             </a>
             <div @click="activeLeftTab = 2" class="tab" :class="{active: activeLeftTab == 2}">Фото</div>
-<!--            <div v-if="item.obj3d != null &&  item.obj3d.length" @click="activeLeftTab = 3"-->
-<!--                 :class="{active: activeLeftTab == 3}" class="tab tab3d">-->
-<!--              360°-->
-<!--            </div>-->
+            <!--            <div v-if="item.obj3d != null &&  item.obj3d.length" @click="activeLeftTab = 3"-->
+            <!--                 :class="{active: activeLeftTab == 3}" class="tab tab3d">-->
+            <!--              360°-->
+            <!--            </div>-->
           </div>
           <div class="tabs-content">
             <transition mode="out-in" name="fade">
               <div class="slider" key="1" v-if="activeLeftTab == 2">
-                <v-swiper :list="item.galleryImages"></v-swiper>
+                <v-swiper :list="gallery"></v-swiper>
               </div>
               <div key="2" v-else-if="activeLeftTab == 1">
-                <v-swiper :list="item.images"></v-swiper>
+                <v-swiper :list="images"></v-swiper>
               </div>
-<!--              <div class="obj3d" key="3" v-else-if="activeLeftTab == 3">-->
-<!--                <v-object-views :mtl="item.obj3d[1]" :src="item.obj3d[0]"></v-object-views>-->
-<!--              </div>-->
+              <!--              <div class="obj3d" key="3" v-else-if="activeLeftTab == 3">-->
+              <!--                <v-object-views :mtl="item.obj3d[1]" :src="item.obj3d[0]"></v-object-views>-->
+              <!--              </div>-->
             </transition>
           </div>
         </div>
@@ -57,10 +57,10 @@
         <div class="tabs">
           <div @click="mobileTab = 1" class="tab" :class="{active: mobileTab == 1}">Картинки</div>
           <div @click="mobileTab = 2" class="tab" :class="{active: mobileTab == 2}">Фото</div>
-<!--          <div v-if="item.obj3d != null && item.obj3d.length" @click="mobileTab = 5" class="tab"-->
-<!--               :class="{active: mobileTab == 5}">-->
-<!--            3D-модель-->
-<!--          </div>-->
+          <!--          <div v-if="item.obj3d != null && item.obj3d.length" @click="mobileTab = 5" class="tab"-->
+          <!--               :class="{active: mobileTab == 5}">-->
+          <!--            3D-модель-->
+          <!--          </div>-->
           <div v-if="description" @click="mobileTab = 3" class="tab" :class="{active: mobileTab == 3}">Описание</div>
           <div v-if="item.specification" @click="mobileTab = 4" class="tab" :class="{active: mobileTab == 4}">
             Оборудование
@@ -76,17 +76,17 @@
         <div class="tabs-content">
           <transition mode="out-in" name="fade">
             <div class="slider" key="1" v-if="mobileTab == 1">
-              <v-swiper :list="item.images"></v-swiper>
+              <v-swiper :list="images"></v-swiper>
             </div>
             <div class="slider" key="2" v-if="mobileTab == 2">
-              <v-swiper :list="item.galleryImages"></v-swiper>
+              <v-swiper :list="gallery"></v-swiper>
             </div>
             <div v-else-if="mobileTab == 3" key="3" v-html="description" class="popup__description">
             </div>
             <div v-else-if="mobileTab == 4" key="4" class="popup__device" v-html="createDiv(item.specification)"></div>
-<!--            <div v-else-if="mobileTab == 5" key="4" class="obj3d">-->
-<!--              <v-object-views :mtl="item.obj3d[1]" :src="item.obj3d[0]"></v-object-views>-->
-<!--            </div>-->
+            <!--            <div v-else-if="mobileTab == 5" key="4" class="obj3d">-->
+            <!--              <v-object-views :mtl="item.obj3d[1]" :src="item.obj3d[0]"></v-object-views>-->
+            <!--            </div>-->
           </transition>
         </div>
       </div>
@@ -141,8 +141,16 @@ export default {
     showPdf() {
       this.isPdfShow = true;
     },
+
   },
-  computed: {},
+  computed: {
+    gallery() {
+      return this.item.galleryImages.map(item => item.image)
+    },
+    images() {
+      return this.item.images.map(item => item.image)
+    },
+  },
   beforeMount() {
     this.isDescription()
     this.width = window.innerWidth;
