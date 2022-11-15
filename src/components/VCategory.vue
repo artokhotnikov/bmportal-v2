@@ -2,9 +2,10 @@
   <div class="category">
     <v-container v-if="width > 1200">
       <div class="category__name">
-        <div class="category__img">
+        <div class="category__img" style="position: relative">
           <img v-if="imgThumb" :src="'https://dpn.bm-technology.ru'+imgThumb" alt="">
-          <img v-else src="@/assets/img/notfound.jpeg" alt="">
+          <img v-else style="position:absolute; top: 0; left: 0; object-fit: cover" src="@/assets/img/notfound.png"
+               alt="">
         </div>
         <span>
           {{ item.name }}
@@ -29,9 +30,10 @@
     <v-container v-else>
       <div class="card">
         <div class="category__name">
-          <div class="category__img">
+          <div class="category__img" style="position: relative">
             <img v-if="imgThumb" :src="'https://dpn.bm-technology.ru'+imgThumb" alt="">
-            <img v-else src="@/assets/img/notfound.jpeg" alt="">
+            <img v-else style="position:absolute; top: 0; left: 0; object-fit: cover" src="@/assets/img/notfound.png"
+                 alt="">
           </div>
           <div class="category__header">
             <span>{{ item.name }}</span>

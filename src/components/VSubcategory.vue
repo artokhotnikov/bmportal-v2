@@ -2,9 +2,9 @@
   <div class="subcategory">
     <v-container v-if="width > 1200">
       <div @click="showPopup = true" class="subcategory__name">
-        <div class="subcategory__img">
+        <div class="subcategory__img" style="position: relative">
           <img v-if="imgThumb" :src="'https://dpn.bm-technology.ru'+imgThumb" alt="">
-          <img v-else  src="@/assets/img/notfound.jpeg" alt="">
+          <img v-else style="position:absolute; top: 0; left: 0; object-fit: cover"  src="@/assets/img/notfound.png" alt="">
         </div>
         <span>{{ item.name }}</span>
       </div>
@@ -30,9 +30,9 @@
     <v-container v-else>
       <div class="card">
         <div @click="showPopup = true" class="subcategory__name">
-          <div class="subcategory__img">
+          <div class="subcategory__img" style="position: relative">
             <img v-if="imgThumb" :src="'https://dpn.bm-technology.ru'+imgThumb" alt="">
-            <img v-else  src="@/assets/img/notfound.jpeg" alt="">
+            <img v-else style="position:absolute; top: 0; left: 0; object-fit: cover"  src="@/assets/img/notfound.png" alt="">
           </div>
           <div class="category__header">
             <span>{{ item.name }}</span>

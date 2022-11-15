@@ -8,7 +8,7 @@
         <div class="popup__left">
           <div class="tabs">
             <div @click="activeLeftTab = 1" class="tab" :class="{active: activeLeftTab == 1}">Картинки</div>
-            <div v-if="item.subCategory.drawing" @click="showPdf(item)" class="tab">
+            <div v-if="item.drawing" @click="showPdf(item)" class="tab">
               Чертежи
             </div>
             <a :href="'https://dpn.bm-technology.ru/uploads/files/' +item.subCategory.techSpec"
@@ -65,7 +65,7 @@
           <div v-if="item.specification" @click="mobileTab = 4" class="tab" :class="{active: mobileTab == 4}">
             Оборудование
           </div>
-          <div v-if="item.subCategory.drawing" @click="showPdf(item)" class="tab">
+          <div v-if="item.drawing" @click="showPdf(item)" class="tab">
             Чертежи
           </div>
           <a :href="'https://dpn.bm-technology.ru/uploads/files/' +item.subCategory.techSpec"
@@ -93,7 +93,7 @@
     </div>
     <div class="popup__body pdf-body" v-if="isPdfShow">
       <div class="popup__close" @click="isPdfShow = false"></div>
-      <iframe :src="'https://dpn.bm-technology.ru/uploads/files/'+item.subCategory.drawing" width="100%"
+      <iframe :src="'https://dpn.bm-technology.ru'+item.drawing" width="100%"
               height="100%"></iframe>
     </div>
   </div>
