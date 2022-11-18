@@ -11,8 +11,8 @@
             <div v-if="item.drawing" @click="showPdf(item)" class="tab">
               Чертежи
             </div>
-            <a :href="'https://dpn.bm-technology.ru/uploads/files/' +item.subCategory.techSpec"
-               :download="item.subCategory.techSpecOrigName" v-if="item.subCategory.techSpec" class="tab">
+            <a :href="'https://dpn.bm-technology.ru' +item.techSpec"
+               :download="item.techSpecOrigName" v-if="item.techSpec" class="tab">
               ТЗ
             </a>
             <div @click="activeLeftTab = 2" class="tab" :class="{active: activeLeftTab == 2}">Фото</div>
@@ -68,8 +68,8 @@
           <div v-if="item.drawing" @click="showPdf(item)" class="tab">
             Чертежи
           </div>
-          <a :href="'https://dpn.bm-technology.ru/uploads/files/' +item.subCategory.techSpec"
-             :download="item.subCategory.techSpecOrigName" v-if="item.subCategory.techSpec" class="tab">
+          <a :href="'https://dpn.bm-technology.ru' +item.techSpec"
+             :download="item.techSpecOrigName" v-if="item.techSpec" class="tab">
             ТЗ
           </a>
         </div>
